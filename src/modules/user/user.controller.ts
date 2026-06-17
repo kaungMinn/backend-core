@@ -8,9 +8,11 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
   if (typeof id !== 'string') {
     return res.error('Invalid user ID provided', 400);
   }
-  
-  const user = await req.state.userRepo.findById(id);
-  
+
+  const {userRepo} = req.state.container; 
+
+  const user = await userRepo.findById(id);
+
   if (!user) return res.error('User not found', 404);
   
   res.success(user);

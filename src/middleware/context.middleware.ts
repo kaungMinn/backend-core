@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import { UserPostgresRepository } from '../modules/user/user.repository.js';
+import { getContainer } from '../lib/container.js';
 
 export const contextMiddleware = (req: Request, _res: Response, next: NextFunction) => {
   // Inject your db client (or pool) here
@@ -7,7 +8,7 @@ export const contextMiddleware = (req: Request, _res: Response, next: NextFuncti
 
   req.state = {
     db,
-    userRepo: new UserPostgresRepository(db),
+    container: getContainer(db),
     requestId: crypto.randomUUID(),
   };
   next();

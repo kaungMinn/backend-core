@@ -1,9 +1,16 @@
 import { DatabasePool } from 'some-postgres-pool-type';
 import type { UserRepository } from '../modules/user/user.repository.ts';
 
+export interface AppContainer {
+  userRepo: UserRepository;
+  // Easily add more as your app grows:
+  // orderRepo: OrderRepository;
+  // productRepo: ProductRepository;
+}
+
 export interface GlobalAppState {
   db: DatabasePool;
-  userRepo: UserRepository;
+  container: AppContainer;
   requestId: string;
 }
 
