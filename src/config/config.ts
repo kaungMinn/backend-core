@@ -1,0 +1,24 @@
+import { z } from 'zod';
+
+const environmentSchema = z.object({
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  PORT: z.string().default("3000").transform((val) => parseInt(val, 10)),
+  
+  DATABASE_URL: z.url().default('postgresql://postgres:postgres@localhost:5432/express_beast'),
+  
+  REDIS_URL: z.url().default('redis://localhost:6379'),
+
+  JWT_SECRET: z.string().min(8).default('super_secret_fallback_key_change_me')
+});
+
+const parseResult = environmentSchema.safeParse(process.env);
+
+if (!parseResult.success) {
+  console.error('Missing or invalid environment layout variables:');
+  console.error(JSON.stringify(z.treeifyError(parseResult.error), null, 2));
+  process.exit(1); // Stop the server application process immediately
+}
+
+export const config = parseResult.data;
+
+export type AppConfig = z.infer<typeof environmentSchema>;
