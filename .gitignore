@@ -86,3 +86,5 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+patterns.txt

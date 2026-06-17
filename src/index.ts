@@ -2,6 +2,7 @@ import express, { type Application, type Request, type Response } from 'express'
 import { config } from './config/config.js';
 import { contextMiddleware } from './middleware/context.middleware.js';
 import { responseMiddleware } from './middleware/response.middleware.js';
+import { errorHandler } from './middleware/error.middleware.js';
 
 const app: Application = express();
 
@@ -12,13 +13,9 @@ app.use(responseMiddleware);
 
 app.get('/health', (req, res) => {
   const dbStatus = req?.db?.connected ? 'Connected' : 'Disconnected';
-  
-  res.status(200).json({ 
-    status: 'UP', 
-    dbStatus,
-    timestamp: new Date().toISOString() 
-  });
+  res.success(dbStatus);
 });
+
 
 const server = app.listen(config.PORT, () => {
     console.log(`Server is listening on port ${config.PORT} in ${config.NODE_ENV} mode.`);
@@ -34,3 +31,6 @@ process.on('SIGTERM', () => {
         console.log("Server closed. Exiting process.");
     })
 });
+
+
+app.use(errorHandler);

@@ -1,3 +1,4 @@
+// DEPENDENCY INJECTION: This file is used in src/index.ts
 import { type Response, type NextFunction, type Request } from 'express';
 
 export const responseMiddleware = (_req: Request, res: Response, next: NextFunction) => {
