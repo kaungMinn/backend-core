@@ -12,7 +12,7 @@ app.use(contextMiddleware);
 app.use(responseMiddleware);
 
 app.get('/health', (req, res) => {
-  const dbStatus = req?.db?.connected ? 'Connected' : 'Disconnected';
+  const dbStatus = req?.state?.db?.connected ? 'Connected' : 'Disconnected';
   res.success(dbStatus);
 });
 

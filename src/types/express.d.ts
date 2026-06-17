@@ -1,9 +1,9 @@
 import { DatabasePool } from 'some-postgres-pool-type';
-import { RedisClientType } from 'redis';
+import type { UserRepository } from '../modules/user/user.repository.ts';
 
 export interface GlobalAppState {
   db: DatabasePool;
-  redis: RedisClientType;
+  userRepo: UserRepository;
   requestId: string;
 }
 
@@ -12,7 +12,6 @@ declare global {
     interface Request {
       state: GlobalAppState;
       user?: { id: string; role: string };
-      db: any;
     };
     interface Response {
       success: (data: any) => void;
