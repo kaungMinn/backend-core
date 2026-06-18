@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 export interface UserRepository {
   findById(id: string): Promise<any>;
   findByEmail(email: string): Promise<any>; 
+  create(data: typeof users.$inferInsert): Promise<any>;
 }
 
 export class UserPostgresRepository implements UserRepository {

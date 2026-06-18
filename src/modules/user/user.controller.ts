@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import { asyncHandler } from '../../middleware/asyncHandler.js';
+import type { RegisterUserDto } from './user.dto.js';
 
 
 export const getUser = asyncHandler(async (req: Request, res: Response) => {
@@ -17,3 +18,15 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
   
   res.success(user);
 });
+
+
+
+export const register = async (req: Request, res: Response) => {
+  const dto : RegisterUserDto = {
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  const user = await req.state.container.userService.register(dto);
+  res.success(user)
+}

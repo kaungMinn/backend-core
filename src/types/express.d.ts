@@ -1,15 +1,14 @@
-import { DatabasePool } from 'some-postgres-pool-type';
 import type { UserRepository } from '../modules/user/user.repository.ts';
+import type { UserService } from '@/modules/user/user.service.ts';
+import type { Database } from '@/lib/db.ts';
 
 export interface AppContainer {
   userRepo: UserRepository;
-  // Easily add more as your app grows:
-  // orderRepo: OrderRepository;
-  // productRepo: ProductRepository;
+  userService: UserService;
 }
 
 export interface GlobalAppState {
-  db: DatabasePool;
+  db: Database;
   container: AppContainer;
   requestId: string;
 }
